@@ -1,0 +1,77 @@
+{% assign images = '' %}
+  {% assign ingredients = '' %}
+  {% assign titles = '' %}
+  {% assign descriptions = '' %}
+  
+  {% if article.content contains "<h4>" %}
+      
+    {% comment %}<-- ingredients !-->{% endcomment %}
+    {% assign article-ingredients-buffer = article.content | strip | split: "</ul>" %}
+    {% assign article-ingredients-buffer = article-ingredients-buffer[0] %}
+    {% assign article-ingredients-buffer = article-ingredients-buffer | split: "<ul>" %}
+    {% assign article-ingredients-buffer = article-ingredients-buffer[1] %} 
+    {% assign article-ingredients = article-ingredients-buffer %}
+    {% assign article-ingredients = article-ingredients | strip | split: "<li>" %}
+    
+    {% for ingredients in article-ingredients %}
+      {% if ingredients contains "http" %}
+        {% assign buffer = ingredients | split: "http" %}
+        {% assign ingredient = ingredient | append: ",,," | append: buffer[0] %}
+        {% assign links = links | append: ",,," | append: "http" | append: buffer[1] %}
+      {% else %}
+        {% assign ingredient = ingredient | append: ",,," | append: ingredients %}
+        {% assign links = links | append: ",,," |  append: "nil" %}
+      {% endif %}
+    {% endfor %}
+    
+    {% assign ingredient = ingredient | split: ",,," %}
+    {% assign links = links  | split: ",,," %}
+  
+    {% comment %}<-- slides that arent ingredients !-->{% endcomment %}
+    {% assign first-chunk = article.content | strip | split : "<ul>" %}
+    {% assign first-chunk = first-chunk[0] %}
+    {% assign second-chunk = article.content | strip | split : "</ul>" %}
+    {% assign second-chunk = second-chunk[1] %}
+    {% assign second-chunk = second-chunk | prepend: first-chunk %}
+    {% assign chunks = second-chunk | split: "<h4>" %}
+    
+    {% for chunk in chunks %}
+      {% if chunk contains "</h4>" %}
+        {% assign line-parse-one = chunk | split: "</h4>" %}
+        {% assign line-parse-two = line-parse-one.last | split: "<p>" %}
+        {% assign line-parse-three = line-parse-two.last %}
+        {% assign titles = titles | append: ",,," | append: line-parse-one.first %}
+        {% assign descriptions = descriptions | append: ",,," | append: line-parse-three %}
+        {% assign images = images | append: ",,," | append: line-parse-two[1] %}
+      {% endif %}
+    {% endfor %}
+    
+    {% assign images = images | remove: "</p>" %}
+    {% assign titles = titles  | split: ",,," %}
+    {% assign descriptions = descriptions  | split: ",,,"  %}
+    {% assign images = images | split: ",,," %} 
+   
+  {% endif %}
+
+     
+      
+      {% for title in titles %}
+        {% if forloop.index0 == 0 %}
+          <div>{{ images[1] }}</div>
+          <div>{{ titles[1] }}</div>
+          <div>{{ descriptions[1] }}</div>
+        {% elsif forloop.index0 == 1%}
+          {% for ingreds in ingredient %}
+      		{% if links[forloop.index0] != "nil" %}
+            <div><a href="{{ links[forloop.index0] }}">{{ingredient[forloop.index0]}}</a></div>
+            {% else %}
+            <div>{{ingredient[forloop.index0]}}</div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <div>{{ images[forloop.index0] }}</div>
+          <div>{{ titles[forloop.index0] }}</div>
+          <div>{{ descriptions[forloop.index0] }}</div>
+        {% endif %}
+      {% endfor %}
+        
