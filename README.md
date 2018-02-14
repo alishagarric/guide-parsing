@@ -24,7 +24,7 @@ How the parsing script works:
   4. Seperate the "normal" slide's html by title, image and description into their own strings by splitting at </h4> and <p> and joining them with ",,,"
   5. Again, seperate their own strings into an array by splitting at ",,,"
   
-  The for loop:
+ How the for loop works:
   1. loops through the amount of slides (by looping through the titles)
   2. If its the first slide, display title, image and description
   3. If its the second slide, either display ingredient normally
