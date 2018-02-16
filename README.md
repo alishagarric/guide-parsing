@@ -26,7 +26,7 @@ How the parsing script works:
   8. Seperate ingredients string and links string into arrays by splitting at ",,,"
   9. Seperate the "normal" slide's html into an array, where the arrays elements are the content of the slides by splitting at </h4>
   10. For each element in that array, seperate into a second array where its elements are strings containing the content for title, image and description 
-  11. Do this by splitting at <p>
+  11. Do this by splitting at <p
   12. Test within each element for <h4 or <img (else if string doesn't contain <h4 or <img it is a desciption). 
   13. If it contains <h4 add it to the end of a string titled titles, if it contains <img add it to the end of a string titled images, and if it contains neither add it to the end of a string titled descriptions
   14. Seperate these strings into arrays by splitting at ",,,"
