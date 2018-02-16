@@ -4,15 +4,15 @@ Parses blog html on Shopify site for guides and provides for loop to display con
 Place this script in replacment of {{ article.content }}
 
 This script written in Liquid parses a blog written as:
-slide 0 - title (formatted as an h4 heading)
-slide 0 - image (using insert image tool)
-slide 0 - description (formatted in default paragraph tag)
+slide 0 - title (formatted as an h4 heading) <br>
+slide 0 - image (using insert image tool)<br>
+slide 0 - description (formatted in default paragraph tag)<br>
 
 slide 1 - ingredients (as list elements of an unordered list)
   (if an ingredient is a product, include a URL directly after ingredient name)
   
-slide x - title (formatted as an h4 heading)
-slide x - image (using insert image tool)
+slide x - title (formatted as an h4 heading) <br>
+slide x - image (using insert image tool)<br>
 slide x - description (formatted in default paragraph tag)
 
 How the parsing script works:
